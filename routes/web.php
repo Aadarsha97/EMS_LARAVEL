@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +25,20 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('Admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
+Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+
+
+Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
+
+
+
+
+
+Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 
 
 Route::get('/category', [CategoryController::class, 'index'])->name('category.index');

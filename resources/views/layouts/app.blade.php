@@ -32,20 +32,28 @@
 
             <div class="flex flex-col">
                 <img src="{{  asset('images/logo.png') }}" alt="" srcset="" class="w-32">
-                <a href="" class="hover:bg-blue-400 p-1 text-lg">Dashboard</a>
-                <a href="{{ route('category.index') }}" class="hover:bg-blue-400 p-1 text-lg">Categories</a>
-                <a href="" class="hover:bg-blue-400 p-1 text-lg">About</a>
-                <a href="" class="hover:bg-blue-400 p-1 text-lg">Logout</a>
+                <a href="{{ route('dashboard')}}" class="hover:bg-blue-400 p-1 text-lg">Dashboard</a>
+                <a href="{{ route('departments.index')}}" class="hover:bg-blue-400 p-1 text-lg">Departments</a>
+                <a href="{{ route('employee.index')}}" class="hover:bg-blue-400 p-1 text-lg">Employee</a>
+                <a href="{{ route('tasks.index')}}" class="hover:bg-blue-400 p-1 text-lg">Tasks</a>
+                <a href="" class="hover:bg-blue-400 p-1 text-lg">Salary</a>
+                <a href="" class="hover:bg-blue-400 p-1 text-lg">Analytics</a>
+                <a href="" class="hover:bg-blue-400 p-1 text-lg">Leaves</a>
 
             </div>
         </div>
         <div class="flex flex-col flex-1">
-            <div class="h-12 bg-slate-200 min-w-full  ">Navbar
+            <div class="h-12 bg-slate-200 gap-8 min-w-full flex flex-row justify-end items-center p-8 cursor-pointer  ">
 
-                <i class="fa fa-user"></i>
-                <i class="fa fa-message"></i>
-                <i class="fa fa-logout"></i>
+                <a onclick="toggleModal()"><span> <i class="fa fa-user"> </i>   Admin </span>
+                </a>
+            </div>
 
+            <div class="h-fit w-28 fixed right-10 top-16 shadow-xl py-3 bg-slate-200 hidden" id="logoutpopup">
+                <ul>
+                    <li class="text-center py-1 hover:bg-black hover:text-white">Profile</li>
+                    <li class="text-center py-1  hover:bg-black hover:text-white">Logout</li>
+                </ul>
             </div>
             <div>
 
@@ -55,5 +63,16 @@
         </div>
     </div>
 </body>
+<script>
+    const divModal = document.getElementById('logoutpopup');
+
+    function toggleModal() {
+        if (divModal.style.display == "none") {
+            divModal.style.display = "block";
+        } else {
+            divModal.style.display = "none";
+        }
+    }
+</script>
 
 </html>
