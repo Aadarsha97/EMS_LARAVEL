@@ -9,7 +9,7 @@
 
 <div class="m-6 shadow-md p-4 rounded-lg ">
     <div class="flex flex-row justify-end m-4">
-        <a href="{{route('category.create')}}" class="bg-blue-500 p-2 rounded-md text-white">Add New Employee</a>
+        <a href="{{route('employee.create')}}" class="bg-blue-500 p-2 rounded-md text-white">Add New Employee</a>
     </div>
 
     <table id="mytable">

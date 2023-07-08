@@ -9,7 +9,7 @@
 
 <div class="m-6 shadow-md p-4 rounded-lg ">
     <div class="flex flex-row justify-end m-4">
-        <a href="{{route('category.create')}}" class="bg-blue-500 py-2 px-3 rounded-md text-white">Add New Department</a>
+        <a href="{{route('departments.create')}}" class="bg-blue-500 py-2 px-3 rounded-md text-white">Add New Department</a>
     </div>
 
     <table id="mytable">
@@ -26,16 +26,26 @@
         </thead>
 
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Manager</td>
-                <td>Number of Employee</td>
-                <td>
-                    <button class="bg-blue-500 rounded text-white px-3">Edit</button>
-                    <button class="bg-red-500 rounded text-white px-3">Delete</button>
 
+            @foreach ($departments as $department)
+
+
+            <tr>
+                <td>{{ $loop->iteration }} </td>
+                <td>{{ $department['name'] }}</td>
+                <td>Number of Employee</td>
+                <td class="flex gap-4">
+                    <a class="bg-blue-500 rounded text-white px-3" href="{{ route('departments.edit',$department->id) }}">Edit</a>
+
+                    <form action="{{ route('departments.destroy',$department->id) }}" method="post" class="flex flex-row">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="bg-red-500 rounded text-white px-3" href="{{ route('departments.destroy',$department->id) }}">Delete</button>
+
+                    </form>
                 </td>
             </tr>
+            @endforeach
         </tbody>
 
     </table>

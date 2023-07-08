@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class DepartmentController extends Controller
     public function index()
     {
         //
-        return view('Admin.Departments.index');
+        $departments = Department::all();
+        return view('Admin.Departments.index', compact('departments'));
     }
 
     /**
@@ -23,6 +25,8 @@ class DepartmentController extends Controller
     public function create()
     {
         //
+
+        return view('Admin.Departments.create');
     }
 
     /**
@@ -31,6 +35,17 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         //
+
+        $request->validate([
+            'name' => 'required|min:3'
+        ]);
+        $data = [
+            'name' => $request->name
+        ];
+
+        Department::create($data);
+
+        return redirect(route('departments.index'))->with('success', 'New Department created Successfully');
     }
 
     /**
@@ -47,6 +62,9 @@ class DepartmentController extends Controller
     public function edit(string $id)
     {
         //
+        $department = Department::findorFail($id);
+
+        return view('Admin.Departments.edit', compact('department'));
     }
 
     /**
@@ -55,13 +73,26 @@ class DepartmentController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $data = [
+            'name' => $request->name
+        ];
+
+        $department = Department::findorFail($id);
+        $department->update($data);
+
+        return redirect(route('departments.index'))->with('success', "Successfully Updated");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Department $department)
     {
         //
+
+
+        $department->delete();
+
+        return redirect(route('departments.index'))->with('success', "Successfully Deleted");
     }
 }

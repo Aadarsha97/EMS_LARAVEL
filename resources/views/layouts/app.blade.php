@@ -29,7 +29,13 @@
 
             <h2 class="text-4xl font-bold text-blue-900 my-2">EMS</h2>
 
+      
+@if (isset($success))
+@include('layouts.success_message')
+@endif
 
+           
+            
             <div class="flex flex-col">
                 <img src="{{  asset('images/logo.png') }}" alt="" srcset="" class="w-32">
                 <a href="{{ route('dashboard')}}" class="hover:bg-blue-400 p-1 text-lg">Dashboard</a>
@@ -45,7 +51,7 @@
         <div class="flex flex-col flex-1">
             <div class="h-12 bg-slate-200 gap-8 min-w-full flex flex-row justify-end items-center p-8 cursor-pointer  ">
 
-                <a onclick="toggleModal()"><span> <i class="fa fa-user"> </i>   Admin </span>
+                <a onclick="toggleModal()"><span> <i class="fa fa-user"> </i> Admin </span>
                 </a>
             </div>
 

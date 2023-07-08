@@ -32,7 +32,11 @@ Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.in
 Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
 
 
-Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
+
+
+Route::resource('/departments', DepartmentController::class);
+Route::resource('/employee', EmployeeController::class);
+
 
 
 

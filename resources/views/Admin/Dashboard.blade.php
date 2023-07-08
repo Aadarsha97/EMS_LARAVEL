@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h2 class="text-2xl font-bold p-6">Dashboardgit</h2>
+<h2 class="text-2xl font-bold p-6">Dashboard</h2>
 <hr class="h-0.5 bg-blue-600">
 
 <div class="flex flex-row justify-center py-10">
