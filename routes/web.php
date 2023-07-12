@@ -4,7 +4,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +39,11 @@ Route::get('/category/create', [CategoryController::class, 'create'])->name('cat
 Route::resource('/departments', DepartmentController::class);
 Route::resource('/employee', EmployeeController::class);
 
+Route::resource('/roles', RoleController::class);
+Route::resource('/permissions', PermissionController::class);
+Route::get('/roles/manage', [RoleController::class, 'manage'])->name('roles.manage');
 
+Route::view('/dmk', 'Admin.roles.manage');
 
 
 

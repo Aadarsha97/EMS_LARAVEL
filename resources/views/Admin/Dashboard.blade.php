@@ -15,6 +15,12 @@
                 <p class="text-center text-2xl">20</p>
             </div>
         </div>
+        <div class="min-h-[130px] bg-gray-500 rounded text-white flex flex-row justify-center items-center ">
+            <div>
+                <p class="text-2xl font-semibold px-4 min-w-[200px]">Roles</p>
+
+            </div>
+        </div>
 
         <div class="min-h-[130px] min-w-[200px] bg-blue-500 rounded text-white flex flex-row justify-center items-center ">
             <div>

@@ -29,17 +29,21 @@
 
             <h2 class="text-4xl font-bold text-blue-900 my-2">EMS</h2>
 
-      
-@if (isset($success))
-@include('layouts.success_message')
-@endif
 
-           
-            
+            @if (isset($success))
+            @include('layouts.success_message')
+            @endif
+
+
+
             <div class="flex flex-col">
                 <img src="{{  asset('images/logo.png') }}" alt="" srcset="" class="w-32">
                 <a href="{{ route('dashboard')}}" class="hover:bg-blue-400 p-1 text-lg">Dashboard</a>
                 <a href="{{ route('departments.index')}}" class="hover:bg-blue-400 p-1 text-lg">Departments</a>
+
+                <a href="{{ route('roles.index') }}" class="hover:bg-blue-400 p-1 text-lg">Roles</a>
+                
+                <a href="{{ route('permissions.index') }}" class="hover:bg-blue-400 p-1 text-lg">Permissions</a>
                 <a href="{{ route('employee.index')}}" class="hover:bg-blue-400 p-1 text-lg">Employee</a>
                 <a href="{{ route('tasks.index')}}" class="hover:bg-blue-400 p-1 text-lg">Tasks</a>
                 <a href="" class="hover:bg-blue-400 p-1 text-lg">Salary</a>
