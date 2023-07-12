@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class EmployeeController extends Controller
 {
@@ -14,6 +15,9 @@ class EmployeeController extends Controller
     public function index()
     {
         //
+
+
+
 
 
         return view('Admin.Employees.index');

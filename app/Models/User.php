@@ -34,6 +34,11 @@ class User extends Authenticatable
         return   $this->belongsTo(Role::class);
     }
 
+    public function permissions()
+    {
+        return   $this->role->belongsToMany(Permission::class, 'role_permissions', 'role_id', 'permission_id');
+    }
+
     /**
      * The attributes that should be cast.
      *

@@ -16,6 +16,7 @@ class RoleController extends Controller
     {
         //
         $roles = Role::orderBy('level')->get();
+
         return view('Admin.roles.index', compact('roles'));
     }
 
@@ -23,7 +24,23 @@ class RoleController extends Controller
      * Show the form for creating a new resource.
      */
 
-   
+    public function manage(string $id)
+    {
+        //
+
+
+
+
+
+        $user = User::find($id);
+
+        session()->put('u_id', $id);
+        $permissions = $user->permissions()->get();
+
+        return view('Admin.roles.manage', compact('permissions', 'user'));
+    }
+
+
 
     public function create()
     {

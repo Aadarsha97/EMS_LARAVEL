@@ -41,7 +41,7 @@ Route::resource('/employee', EmployeeController::class);
 
 Route::resource('/roles', RoleController::class);
 Route::resource('/permissions', PermissionController::class);
-Route::get('/roles/manage', [RoleController::class, 'manage'])->name('roles.manage');
+Route::get('/roles/{id}/manage', [RoleController::class, 'manage'])->name('roles.manage');
 
 Route::view('/dmk', 'Admin.roles.manage');
 
