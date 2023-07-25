@@ -10,42 +10,16 @@
             <a href="{{ route('roles.create') }}" class="bg-blue-500 px-4 py-1 rounded-md text-white">Add Permisson</a>
         </div>
 
-        <table id="mytable">
 
-            <thead>
-                <tr>
-                    <th>First Column</th>
-                    <th> Second Column </th>
+        <div class="grid grid-cols-3 gap-5">
 
-                    <th>Third Column</th>
-
-                </tr>
-            </thead>
-
-            <tbody>
-
-                @for ($i = 0; $i < count($permissions) / 3; $i = $i + 3)
-                    @php
-                        $permission1 = $permissions[$i];
-                        $permission2 = $permissions[$i + 1];
-                        $permission3 = $permissions[$i + 2];
-                    @endphp
-                    <tr>
-                        <td>
-                            {{ $permission1->permission }}
-                        </td>
-                        <td>
-                            {{ $permission2->permission }}</td>
-                        <td>
-                            {{ $permission3->permission }}</td>
-                    </tr>
-                @endfor
+            @foreach ($permissions as $permission)
+                <p>{{ $permission->permission }}</p>
+            @endforeach
 
 
-
-            </tbody>
-
-        </table>
+        </div>
+        {{ $permissions->links() }}
     </div>
 
     <script>

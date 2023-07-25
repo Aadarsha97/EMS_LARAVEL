@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,18 +15,19 @@ class PermissionController extends Controller
     public function index()
     {
         //
-        $permissions = Permission::orderBy('permission')->get();
+        $permissions = Permission::orderBy('permission')->paginate(30);
 
         // dd(auth()->user()->role->permissons);
         return view('Admin.permissions.index', compact('permissions'));
     }
 
-    public function manage()
+    public function manage(string $id)
     {
         //
+        dd($id);
         $permissions = Permission::all();
 
-        dd(auth()->user()->role->permissons);
+
         return view('Admin.roles.index');
     }
 
@@ -66,7 +68,7 @@ class PermissionController extends Controller
 
 
 
-        $role->permissions()->sync($permissions);
+        $role->permissions()->attach($permissions);
 
         return redirect()->route('roles.index')->with('success', 'Permissions Added Successfully');
     }
@@ -98,8 +100,14 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $roleid, string $permissionid)
     {
         //
+
+
+        $role = Role::find($roleid);
+        $role->permissions()->detach($permissionid);
+
+        return redirect()->route('roles.index')->with('success', 'Permission Deleted Successfully');
     }
 }

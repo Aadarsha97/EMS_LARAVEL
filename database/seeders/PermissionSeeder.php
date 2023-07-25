@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Department;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -17,14 +18,20 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        /*   $role = [
+        $role = [
             'role' => 'Admin',
             'level' => '1',
 
-        ]; */
+        ];
 
-        // Role::create($role);
+        $department = [
+            'name' => 'Adminstration',
+
+        ];
+
+        Department::create($department);
+
+        Role::create($role);
 
         $routes = Route::getRoutes();
 
@@ -38,15 +45,16 @@ class PermissionSeeder extends Seeder
 
 
 
-        // $user = [
-        //     'name' => 'Alex',
-        //     'role_id' => 1,
-        //     'email' => 'alex@gmail.com',
-        //     'password' => Hash::make('12345678'),
+        $user = [
+            'name' => 'Alex',
+            'role_id' => 1,
+            'department_id' => 1,
+            'email' => 'alex@gmail.com',
+            'password' => Hash::make('12345678'),
 
-        // ];
+        ];
 
-        // User::create($user);
+        User::create($user);
 
         foreach ($data as $permission) {
 

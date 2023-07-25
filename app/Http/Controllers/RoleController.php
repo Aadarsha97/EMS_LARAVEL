@@ -15,7 +15,11 @@ class RoleController extends Controller
     public function index()
     {
         //
-        $roles = Role::orderBy('level')->get();
+
+        $roles = Role::where('role', '!=', 'admin')->orderBy('level')->get();
+
+
+
 
         return view('Admin.roles.index', compact('roles'));
     }
@@ -32,12 +36,16 @@ class RoleController extends Controller
 
 
 
-        $user = User::find($id);
+        $role = Role::find($id);
+
+
 
         session()->put('u_id', $id);
-        $permissions = $user->permissions()->get();
+        $permissions = $role->permissions;
 
-        return view('Admin.roles.manage', compact('permissions', 'user'));
+
+
+        return view('Admin.roles.manage', compact('permissions', 'role'));
     }
 
 

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Role;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 class EmployeeController extends Controller
@@ -17,10 +20,10 @@ class EmployeeController extends Controller
         //
 
 
+        $employees = User::all();
 
 
-
-        return view('Admin.Employees.index');
+        return view('Admin.Employees.index', compact('employees'));
     }
 
     /**
@@ -30,8 +33,9 @@ class EmployeeController extends Controller
     {
         //
         $departments = Department::all();
+        $roles = Role::all();
 
-        return view('Admin.Employees.create')->with(compact('departments'));
+        return view('Admin.Employees.create')->with(compact('departments', 'roles'));
     }
 
     /**
@@ -43,17 +47,25 @@ class EmployeeController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
-            'contact_number' => 'required|numeric|max_digits:13',
+            'email' => 'required|email|unique:users,email',
             'department_id' => 'required',
-            'dob' => 'required|date|before:' . Carbon::now()->subYears(16)->format('Y-m-d'),
-            'password' => 'required|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/|max:255|min:6',
-            'confirm_password' => 'required|same:password|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/|max:255|min:6'
+            'password' => 'required|max:255|min:6',
+            'confirm_password' => 'required|same:password|max:255|min:6'
         ]);
 
-        dd($request);
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role_id' => $request->role_id,
+            'department_id' => $request->department_id,
+        ];
 
-        $this->index()->with('success', 'New Employee Added Successfully');
+        $data['password'] = Hash::make($request->password);
+
+        User::create($data);
+
+
+        return view('Admin.Employees.index')->with('success', 'New Employee Added Successfully');
     }
 
     /**

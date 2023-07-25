@@ -35,10 +35,12 @@
                         <td>Department</td>
                         <td>Number of Tasks</td>
                         <td>
+
+                            {{ print_r($role->id) }}
                             <button class="bg-blue-500 rounded text-white px-3">Edit</button>
                             <button class="bg-red-500 rounded text-white px-3">Delete</button>
                             <a class="bg-green-500 rounded text-white px-3 py-0.5"
-                                href="{{ route('roles.manage',$role->users()->get()->first()->id) }}">Manage
+                                href="{{ route('roles.manage', $role->id) }}">Manage
                                 Permission </a>
                         </td>
                     </tr>
