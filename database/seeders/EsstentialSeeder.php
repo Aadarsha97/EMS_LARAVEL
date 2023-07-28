@@ -2,9 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Department;
 use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 class EsstentialSeeder extends Seeder
@@ -15,21 +19,33 @@ class EsstentialSeeder extends Seeder
     public function run(): void
     {
         //
-        $permissions = [
-            'view-departments', 'manage-departments', 'view-roles', 'manage-roles', 'view-permissions', 'manage-permissions',
-            'view-notices', 'manage-notices', 'view-attendances', 'view-attendances-history', 'manage-attendances', 'view-employees', 'manage-employees',
-            'view-salaries', 'manage-salaries', 'view-leaves', 'manage-leaves', 'view-leave-requests', 'manage-leave-requests', 'view-leave-requests-history',
-            'view-analytics', 'manage-roles-permissions'
+        $role = [
+            'role' => 'Admin',
+            'level' => '1',
 
         ];
 
+        $department = [
+            'name' => 'Adminstration',
+
+        ];
+
+        Department::create($department);
+
+        Role::create($role);
 
 
-        foreach ($permissions as $permission) {
-            Permission::create([
-                'permission' => $permission,
-            ]);
-        }
+
+        $user = [
+            'name' => 'Alex',
+            'role_id' => 1,
+            'department_id' => 1,
+            'email' => 'alex@gmail.com',
+            'password' => Hash::make('12345678'),
+
+        ];
+
+        User::create($user);
         //    
     }
 }
