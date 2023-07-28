@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -13,18 +15,19 @@ class PermissionController extends Controller
     public function index()
     {
         //
-        $permissions = Permission::all();
+        $permissions = Permission::orderBy('permission')->paginate(30);
 
         // dd(auth()->user()->role->permissons);
         return view('Admin.permissions.index', compact('permissions'));
     }
 
-    public function manage()
+    public function manage(string $id)
     {
         //
+        dd($id);
         $permissions = Permission::all();
 
-        dd(auth()->user()->role->permissons);
+
         return view('Admin.roles.index');
     }
 
@@ -34,6 +37,16 @@ class PermissionController extends Controller
     public function create()
     {
         //
+        $user = User::find(session()->get('u_id'));
+
+
+
+        $user_permissions = $user->permissions()->get()->pluck('id');
+
+        $permissions = Permission::whereNotIn('id', $user_permissions)->get();
+
+
+        return view('Admin.permissions.create', compact('user', 'permissions'));
     }
 
     /**
@@ -42,8 +55,22 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'permissions' => 'required|array'
+        ]);
 
-        dd($request);
+        $permissions = $request->permissions;
+        $role = User::find(session()->get('u_id'))->role;
+
+
+
+
+
+
+
+        $role->permissions()->attach($permissions);
+
+        return redirect()->route('roles.index')->with('success', 'Permissions Added Successfully');
     }
 
     /**
@@ -73,8 +100,14 @@ class PermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $roleid, string $permissionid)
     {
         //
+
+
+        $role = Role::find($roleid);
+        $role->permissions()->detach($permissionid);
+
+        return redirect()->route('roles.index')->with('success', 'Permission Deleted Successfully');
     }
 }

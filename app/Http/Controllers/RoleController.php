@@ -15,7 +15,12 @@ class RoleController extends Controller
     public function index()
     {
         //
-        $roles = Role::orderBy('level')->get();
+
+        $roles = Role::where('role', '!=', 'admin')->orderBy('level')->get();
+
+
+
+
         return view('Admin.roles.index', compact('roles'));
     }
 
@@ -23,7 +28,27 @@ class RoleController extends Controller
      * Show the form for creating a new resource.
      */
 
-   
+    public function manage(string $id)
+    {
+        //
+
+
+
+
+
+        $role = Role::find($id);
+
+
+
+        session()->put('u_id', $id);
+        $permissions = $role->permissions;
+
+
+
+        return view('Admin.roles.manage', compact('permissions', 'role'));
+    }
+
+
 
     public function create()
     {

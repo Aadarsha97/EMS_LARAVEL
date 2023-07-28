@@ -9,7 +9,15 @@ class Notice extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'notice',
-        'priority'
+        'title',
+        'description',
+        'date',
+        'user_id',
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
