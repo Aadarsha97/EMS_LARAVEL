@@ -18,48 +18,20 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $role = [
-            'role' => 'Admin',
-            'level' => '1',
+
+        $permissions = [
+            'view-departments', 'manage-departments', 'view-roles', 'manage-roles', 'view-permissions', 'manage-permissions',
+            'view-notices', 'manage-notices', 'view-attendances', 'view-attendances-history', 'manage-attendances', 'view-employees', 'manage-employees',
+            'view-salaries', 'manage-salaries', 'view-leaves', 'manage-leaves', 'view-leave-requests', 'manage-leave-requests', 'view-leave-requests-history',
+            'view-analytics', 'manage-roles-permissions'
 
         ];
 
-        $department = [
-            'name' => 'Adminstration',
-
-        ];
-
-        Department::create($department);
-
-        Role::create($role);
-
-        $routes = Route::getRoutes();
-
-        $data = array_keys($routes->getRoutesByName());
-
-        // $data = [
-        //     'department-create', 'department-view', 'department-edit', 'department-delete',
-        //     'employee-create', 'employee-view', 'employee-edit', 'employee-delete',
-        //     'task-create', 'task-view', 'task-edit', 'task-delete',
-        // ];
 
 
-
-        $user = [
-            'name' => 'Alex',
-            'role_id' => 1,
-            'department_id' => 1,
-            'email' => 'alex@gmail.com',
-            'password' => Hash::make('12345678'),
-
-        ];
-
-        User::create($user);
-
-        foreach ($data as $permission) {
-
+        foreach ($permissions as $permission) {
             Permission::create([
-                'permission' => $permission
+                'permission' => $permission,
             ]);
         }
     }
