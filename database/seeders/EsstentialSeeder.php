@@ -15,16 +15,21 @@ class EsstentialSeeder extends Seeder
     public function run(): void
     {
         //
-        $routes = Route::getRoutes();
+        $permissions = [
+            'view-departments', 'manage-departments', 'view-roles', 'manage-roles', 'view-permissions', 'manage-permissions',
+            'view-notices', 'manage-notices', 'view-attendances', 'view-attendances-history', 'manage-attendances', 'view-employees', 'manage-employees',
+            'view-salaries', 'manage-salaries', 'view-leaves', 'manage-leaves', 'view-leave-requests', 'manage-leave-requests', 'view-leave-requests-history',
+            'view-analytics', 'manage-roles-permissions'
 
-        $data = array_keys($routes->getRoutesByName());
+        ];
 
 
-        foreach ($data as $permission) {
 
+        foreach ($permissions as $permission) {
             Permission::create([
-                'permission' => $permission
+                'permission' => $permission,
             ]);
         }
+        //    
     }
 }

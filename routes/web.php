@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalaryController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,58 +31,74 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-
-
-
-Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
-Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
-
-Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
-Route::post('/analytics', [AnalyticsController::class, 'changemonth'])->name('analytics.changemonth');
-Route::post('/analytics/fetch', [AnalyticsController::class, 'fetch'])->name('analytics.fetch');
-
-
-
-Route::resource('/departments', DepartmentController::class);
-Route::resource('/employee', EmployeeController::class);
-Route::resource('/salary', SalaryController::class);
-Route::get('/salary/{id}/paid', [SalaryController::class, 'paid'])->name('salary.paid');
-
-Route::resource('/roles', RoleController::class);
-
-Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
-Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
-Route::get('permissions/{id}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
-Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
-Route::get('/permissions/{role_id}/{permission_id}/delete', [PermissionController::class, 'destroy'])->name('permissions.destroy');
-Route::get('/permissions/{id}/manage', [PermissionController::class, 'manage'])->name('permissions.manage');
-
-
-
-Route::get('/roles/{id}/manage', [RoleController::class, 'manage'])->name('roles.manage');
-
-Route::view('/dmk', 'Admin.roles.manage');
-
-Route::resource('/attendance', AttendanceController::class);
-
-Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
-Route::resource('/leave', LeaveController::class);
-Route::get('/attendance/{id}/history', [AttendanceController::class, 'history'])->name('attendance.history');
-Route::post('attendance/changemonth', [AttendanceController::class, 'changemonth'])->name('attendance.changemonth');
-
-
-
-
-Route::get('/notice', [NoticeController::class, 'index'])->name('notice.index');
-Route::get('/notice/create', [NoticeController::class, 'create'])->name('notice.create');
-Route::get('notice/{id}/edit', [NoticeController::class, 'edit'])->name('notice.edit');
-Route::post('/notice', [NoticeController::class, 'store'])->name('notice.store');
-Route::get('/notice/{id}/delete', [NoticeController::class, 'destroy'])->name('notice.destroy');
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+
+    Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
+    Route::get('/employee/create', [EmployeeController::class, 'create'])->name('employee.create');
+    Route::get('employee/{id}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
+    Route::post('/employee', [EmployeeController::class, 'store'])->name('employee.store');
+    Route::get('/employee/{id}/delete', [EmployeeController::class, 'destroy'])->name('employees.destroy');
+    Route::post('/employee/{id}/update', [EmployeeController::class, 'update'])->name('employees.update');
+
+
+
+
+    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
+    Route::post('/analytics', [AnalyticsController::class, 'changemonth'])->name('analytics.changemonth');
+    Route::post('/analytics/fetch', [AnalyticsController::class, 'fetch'])->name('analytics.fetch');
+
+
+
+    Route::resource('/departments', DepartmentController::class);
+    Route::resource('/employee', EmployeeController::class);
+    Route::resource('/salary', SalaryController::class);
+    Route::get('/salary/{id}/paid', [SalaryController::class, 'paid'])->name('salary.paid');
+
+    Route::resource('/roles', RoleController::class);
+
+    Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
+    Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
+    Route::get('permissions/{id}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
+    Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
+    Route::get('/permissions/{role_id}/{permission_id}/delete', [PermissionController::class, 'destroy'])->name('permissions.destroy');
+    Route::get('/permissions/{id}/manage', [PermissionController::class, 'manage'])->name('permissions.manage');
+
+
+
+    Route::get('/roles/{id}/manage', [RoleController::class, 'manage'])->name('roles.manage');
+
+    Route::view('/dmk', 'Admin.roles.manage');
+
+    Route::resource('/attendance', AttendanceController::class);
+
+    Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
+    Route::resource('/leave', LeaveController::class);
+    Route::get('/attendance/{id}/history', [AttendanceController::class, 'history'])->name('attendance.history');
+    Route::post('attendance/changemonth', [AttendanceController::class, 'changemonth'])->name('attendance.changemonth');
+
+
+
+
+    Route::get('/notice', [NoticeController::class, 'index'])->name('notice.index');
+    Route::get('/notice/create', [NoticeController::class, 'create'])->name('notice.create');
+    Route::get('notice/{id}/edit', [NoticeController::class, 'edit'])->name('notice.edit');
+    Route::post('/notice', [NoticeController::class, 'store'])->name('notice.store');
+    Route::get('/notice/{id}/delete', [NoticeController::class, 'destroy'])->name('notice.destroy');
+    Route::post('/notice/{id}/update', [NoticeController::class, 'update'])->name('notice.update');
+
+
+
+    Route::get('/profile', [DashboardController::class, 'showprofile'])->name('profile.index');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

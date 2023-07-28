@@ -39,7 +39,16 @@ class AttendanceController extends Controller
 
 
 
-            return view('admin.attendance.history', compact('attendances', 'user', 'oldattendances', 'leave'));
+
+
+            $thisattenance = Attendance::where('user_id', $id)->whereMonth('date', date('m'))->count();
+            $thisleave = Leave::where('user_id', $id)->whereMonth('date', date('m'))->count();
+
+            $days = [$thisattenance, $thisleave];
+
+
+
+            return view('admin.attendance.history', compact('attendances', 'user', 'oldattendances', 'leave', 'days'));
         }
     }
 
@@ -86,7 +95,7 @@ class AttendanceController extends Controller
 
         Attendance::create($data);
 
-        dd('Attendance Submitted');
+        return redirect()->route('attendance.index', ['success', 'Attendance Registered Successfully']);
     }
 
     /**

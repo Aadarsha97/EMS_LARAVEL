@@ -66,6 +66,8 @@ class NoticeController extends Controller
 
         $notice = Notice::find($id);
 
+
+
         return view('admin.notice.edit', compact('notice'));
     }
 
@@ -76,9 +78,22 @@ class NoticeController extends Controller
     {
         //
 
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+
+        $data = $request->all();
+
+        $data['user_id'] = auth()->user()->id;
+
+        Notice::find($id)->update($data);
 
 
-        return redirect()->route('notice.index');
+
+
+
+        return redirect()->route('notice.index')->with('success', 'Notice Updated Successfully');
     }
 
     /**

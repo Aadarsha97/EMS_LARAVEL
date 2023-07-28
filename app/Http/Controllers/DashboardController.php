@@ -11,6 +11,13 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     //
+
+    public function showprofile()
+    {
+
+        $user = auth()->user();
+        return view('profile.index', compact('user'));
+    }
     public function index()
     {
 
@@ -18,6 +25,13 @@ class DashboardController extends Controller
         $roles = Role::count();
         $salary = Salary::where('status', 'Pending')->count();
         $employee = User::count();
+
+
+
+
+
+
+
         return view('Admin.dashboard', compact('departments', 'roles', 'salary', 'employee'));
     }
 }

@@ -6,9 +6,11 @@
 
 
     <div class="m-6 shadow-md p-4 rounded-lg ">
-        <div class="flex flex-row justify-end m-4">
-            <a href="{{ route('employee.create') }}" class="bg-blue-500 p-2 rounded-md text-white">Add New Employee</a>
-        </div>
+        @if (permission('manage-employees') || auth()->user()->role->role == 'Admin')
+            <div class="flex flex-row justify-end m-4">
+                <a href="{{ route('employee.create') }}" class="bg-blue-500 p-2 rounded-md text-white">Add New Employee</a>
+            </div>
+        @endif
 
         <table id="mytable">
 
@@ -18,9 +20,9 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Department</th>
-
-                    <th>Action</th>
-
+                    @if (permission('manage-employees') || auth()->user()->role->role == 'Admin')
+                        <th>Action</th>
+                    @endif
                 </tr>
             </thead>
 
@@ -31,11 +33,12 @@
                         <td>{{ $employee->name }}</td>
                         <td>{{ $employee->email }}</td>
                         <td>{{ $employee->department->name }}</td>
-
-                        <td>
-                            <button class="bg-blue-500 rounded text-white px-3">Edit</button>
-                            <button class="bg-red-500 rounded text-white px-3">Delete</button>
-                        </td>
+                        @if (permission('manage-employees') || auth()->user()->role->role == 'Admin')
+                            <td>
+                                <a href="{{ route('employees.edit', $employee->id) }}"
+                                    class="bg-blue-500 rounded text-white px-3">Edit</a>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
 

@@ -7,17 +7,25 @@
 
     {{-- Notices part --}}
 
+
+
+
+
     <div class="m-5 p-3">
-        <form action="{{ route('notice.store') }}" method="post" class="m-12" enctype="multipart/form-data">
+        <form action="{{ route('notice.update', $notice->id) }}" method="post" class="m-12" enctype="multipart/form-data">
 
             @csrf
-            <x-forminput name="title" type="text" label="Notice Title" />
+            <div class="my-2">
+                <x-input-label for="title" :value="__('Notice Title')" />
+                <input id="title" name="title"
+                    class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                    typetext" value="{{ $notice->title }}" required autofocus>
+
+                <x-input-error :messages="$errors->get('title')" class="mt-2" />
+            </div>
             <div class="my-2">
                 <x-input-label for="work_plan" :value="__('Write your Notice Description ')" />
-                <textarea id="description" class="block w-full bg-slate-100" type="text" name="description"
-                    :value="{{ $notice->description }}
-                    }
-                    }" required autofocus>
+                <textarea id="description" class="block w-full bg-slate-100" type="text" name="description" required> {{ $notice->description }}
                 </textarea>
                 <x-input-error :messages="$errors->get('description')" class="mt-2" />
             </div>

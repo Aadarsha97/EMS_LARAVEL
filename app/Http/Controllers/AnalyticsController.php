@@ -16,7 +16,7 @@ class AnalyticsController extends Controller
     {
         //
 
-        $roles = Role::orderBy('level')->get();
+        $roles = Role::orderBy('level')->where('role', '!=', 'Admin')->get();
 
         $d = date('Y-m');
 

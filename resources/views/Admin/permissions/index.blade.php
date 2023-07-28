@@ -6,9 +6,7 @@
 
 
     <div class="m-6 shadow-md p-4 rounded-lg ">
-        <div class="flex flex-row justify-end m-4">
-            <a href="{{ route('roles.create') }}" class="bg-blue-500 px-4 py-1 rounded-md text-white">Add Permisson</a>
-        </div>
+
 
 
         <div class="grid grid-cols-3 gap-5">

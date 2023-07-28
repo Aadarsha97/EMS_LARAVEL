@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\Rule;
 
 class EmployeeController extends Controller
 {
@@ -82,6 +83,12 @@ class EmployeeController extends Controller
     public function edit(string $id)
     {
         //
+
+        $employee = User::find($id);
+        $departments = Department::all();
+        $roles = Role::all();
+
+        return view('Admin.Employees.edit', compact('employee', 'departments', 'roles'));
     }
 
     /**
@@ -91,8 +98,38 @@ class EmployeeController extends Controller
     {
         //
 
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($id),
+            ],
+            'department_id' => 'required|integer',
+            'password' => 'nullable|string|max:255|min:6',
+            'confirm_password' => 'nullable|same:password|max:255|min:6',
+        ]);
 
-        $this->index()->with('success', ' Employee Updated Successfully');
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role_id' => $request->role_id,
+            'department_id' => $request->department_id,
+        ];
+
+        if ($request->password) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        User::find($id)->update($data);
+
+
+        if ($request->password) {
+            User::find($id)->update($data);
+        }
+
+        return redirect()->route('employee.index')->with('success', 'Employee Updated Successfully');
     }
 
     /**

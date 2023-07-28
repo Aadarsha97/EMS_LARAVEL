@@ -5,14 +5,29 @@
 
         @foreach ($notices as $notice)
             <div class="bg-slate-200 p-8 rounded relative my-2 ">
-                <div class="flex flex-row  absolute top-2 right-2 ">
-                    <x-danger-button onclick="deletenotice({{ $notice->id }})" class="text-sm scale-75">Remove Notice
-                    </x-danger-button>
+                @if (permission('manage-notices') || auth()->user()->role->role == 'Admin')
+                    <div class="flex flex-row  absolute top-2 right-2 ">
+                        <x-danger-button onclick="deletenotice({{ $notice->id }})" class="text-sm scale-75">Remove
+                            Notice
+                        </x-danger-button>
 
-                    <x-secondary-button class="text-sm scale-75" onclick="gotoedit({{ $notice->id }})">
-                        Edit Notice
-                    </x-secondary-button>
-                </div>
+                        <x-secondary-button class="text-sm scale-75" onclick="gotoedit({{ $notice->id }})">
+                            Edit Notice
+                        </x-secondary-button>
+
+                        <script>
+                            function deletenotice(id) {
+                                if (confirm('Are you sure you want to delete this notice?')) {
+                                    window.location.href = "/notice/" + id + "/delete";
+                                }
+                            }
+
+                            function gotoedit(id) {
+                                window.location.href = "/notice/" + id + "/edit";
+                            }
+                        </script>
+                    </div>
+                @endif
                 <b>{{ $notice->title }}</b>
                 <dd>
                     {{ $notice->description }}
@@ -27,16 +42,6 @@
     </div>
 
 
-    <script>
-        function deletenotice(id) {
-            if (confirm('Are you sure you want to delete this notice?')) {
-                window.location.href = "/notice/" + id + "/delete";
-            }
-        }
 
-        function gotoedit(id) {
-            window.location.href = "/notice/" + id + "/edit";
-        }
-    </script>
 
 </div>

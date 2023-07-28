@@ -16,9 +16,8 @@
                 <tr>
                     <th>Sn</th>
                     <th>Roles</th>
-                    <th>Task Type</th>
-                    <th>Allocated to</th>
-                    <th>Status</th>
+                    <th>Number of Permissions</th>
+
 
                     <th>Actions</th>
 
@@ -31,14 +30,11 @@
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $role->role }}</td>
-                        <td>Email</td>
-                        <td>Department</td>
-                        <td>Number of Tasks</td>
+
+                        <td>{{ $role->permissions->count() }}</td>
                         <td>
 
-                            {{ print_r($role->id) }}
-                            <button class="bg-blue-500 rounded text-white px-3">Edit</button>
-                            <button class="bg-red-500 rounded text-white px-3">Delete</button>
+
                             <a class="bg-green-500 rounded text-white px-3 py-0.5"
                                 href="{{ route('roles.manage', $role->id) }}">Manage
                                 Permission </a>

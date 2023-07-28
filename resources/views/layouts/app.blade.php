@@ -65,32 +65,39 @@
                 <img src="{{ asset('images/logo.png') }}" alt="" srcset="" class="w-32">
                 <a href="{{ route('dashboard') }}" class="hover:bg-blue-400 p-1 text-lg">Dashboard</a>
 
-                @if (permission('departments.index'))
+                @if (permission('view-departments') || auth()->user()->role->role == 'Admin')
                     <a href="{{ route('departments.index') }}" class="hover:bg-blue-400 p-1 text-lg">Departments</a>
                 @endif
 
-                @if (permission('roles.index'))
+                @if (permission('view-roles') || auth()->user()->role->role == 'Admin')
                     <a href="{{ route('roles.index') }}" class="hover:bg-blue-400 p-1 text-lg">Roles </a>
                 @endif
 
-                @if (permission('permissions.index'))
+                @if (permission('view-perrmissions') || auth()->user()->role->role == 'Admin')
                     <a href="{{ route('permissions.index') }}" class="hover:bg-blue-400 p-1 text-lg">Permissions</a>
                 @endif
 
-                <a href="{{ route('notice.index') }}" class="hover:bg-blue-400 p-1 text-lg">Notices</a>
+                @if (permission('view-notices') || auth()->user()->role->role == 'Admin')
+                    <a href="{{ route('notice.index') }}" class="hover:bg-blue-400 p-1 text-lg">Notices</a>
+                @endif
 
-                @if (permission('employees.index'))
+
+                @if (permission('view-employees') || auth()->user()->role->role == 'Admin')
                     <a href="{{ route('employee.index') }}" class="hover:bg-blue-400 p-1 text-lg">Employee</a>
                 @endif
-                @if (permission('attendance.index'))
+
+
+                @if (permission('view-attendances') || auth()->user()->role->role == 'Admin')
                     <a href="{{ route('attendance.index') }}" class="hover:bg-blue-400 p-1 text-lg">Attendance</a>
                 @endif
 
-                @if (permission('salary.index'))
+                @if (permission('view-salaries') || auth()->user()->role->role == 'Admin')
                     <a href="{{ route('salary.index') }}" class="hover:bg-blue-400 p-1 text-lg">Salary</a>
                 @endif
 
-                @if (permission('analytics.index'))
+
+
+                @if (permission('view-analytics') || auth()->user()->role->role == 'Admin')
                     <a href="{{ route('analytics.index') }}" class="hover:bg-blue-400 p-1 text-lg">Analytics</a>
                 @endif
 
@@ -99,15 +106,24 @@
         <div class="flex flex-col flex-1">
             <div class="h-12 bg-slate-200 gap-8 min-w-full flex flex-row justify-end items-center p-8 cursor-pointer  ">
 
-                <a onclick="toggleModal()"><span> <i class="fa fa-user"> </i> {{ auth()->user()->role->role }}:
-                        {{ auth()->user()->name }}</span>
-                </a>
+                <button onclick="toggleModal()">
+                    <i class="fa fa-user"> </i>
+                    {{ auth()->user()->role->role }}:
+                    {{ auth()->user()->name }}
+
+                </button>
             </div>
 
             <div class="h-fit w-28 fixed right-10 top-16 shadow-xl py-3 bg-slate-200 hidden" id="logoutpopup">
                 <ul>
-                    <li class="text-center py-1 hover:bg-black hover:text-white">Profile</li>
-                    <li class="text-center py-1  hover:bg-black hover:text-white">Logout</li>
+                    <li class="text-center py-1 hover:bg-black hover:text-white"><a
+                            href="{{ route('profile.index') }}">Profile</a></li>
+                    <li class="text-center py-1  hover:bg-black hover:text-white">
+                        <form action="{{ route('logout') }}" method="POST"x`>
+                            @csrf
+                            <input type="submit" value="Logout" />
+                        </form>
+                    </li>
                 </ul>
             </div>
             <div>
